@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.MarkerManager;
+import com.google.maps.android.geojsonkmlabstraction.Geometry;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -248,8 +249,8 @@ import java.util.Set;
      * @param feature  feature to get geometry style
      * @param geometry geometry to add to the map
      */
-    private Object addFeatureToMap(GeoJsonFeature feature, GeoJsonGeometry geometry) {
-        String geometryType = geometry.getType();
+    private Object addFeatureToMap(GeoJsonFeature feature, Geometry geometry) {
+        String geometryType = geometry.getGeometryType();
         if (geometryType.equals("Point")) {
             return addPointToMap(feature.getPointStyle(), (GeoJsonPoint) geometry);
         } else if (geometryType.equals("LineString")) {
@@ -384,9 +385,9 @@ import java.util.Set;
      * @return array of Marker, Polyline, Polygons that have been added to the map
      */
     private ArrayList<Object> addGeometryCollectionToMap(GeoJsonFeature feature,
-            List<GeoJsonGeometry> geoJsonGeometries) {
+            List<Geometry> geoJsonGeometries) {
         ArrayList<Object> geometries = new ArrayList<Object>();
-        for (GeoJsonGeometry geometry : geoJsonGeometries) {
+        for (Geometry geometry : geoJsonGeometries) {
             geometries.add(addFeatureToMap(feature, geometry));
         }
         return geometries;

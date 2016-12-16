@@ -1,6 +1,7 @@
 package com.google.maps.android.geojson;
 
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.geojsonkmlabstraction.Geometry;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class GeoJsonFeature extends Observable implements Observer {
 
     private final HashMap<String, String> mProperties;
 
-    private GeoJsonGeometry mGeometry;
+    private Geometry mGeometry;
 
     private GeoJsonPointStyle mPointStyle;
 
@@ -35,8 +36,8 @@ public class GeoJsonFeature extends Observable implements Observer {
      * @param properties  hashmap of containing properties related to the feature
      * @param boundingBox bounding box of the feature
      */
-    public GeoJsonFeature(GeoJsonGeometry geometry, String id,
-            HashMap<String, String> properties, LatLngBounds boundingBox) {
+    public GeoJsonFeature(Geometry geometry, String id,
+                          HashMap<String, String> properties, LatLngBounds boundingBox) {
         mGeometry = geometry;
         mId = id;
         mBoundingBox = boundingBox;
@@ -192,7 +193,7 @@ public class GeoJsonFeature extends Observable implements Observer {
      */
     private void checkRedrawFeature(GeoJsonStyle style) {
         if (mGeometry != null && Arrays.asList(style.getGeometryType())
-                .contains(mGeometry.getType())) {
+                .contains(mGeometry.getGeometryType())) {
             // Don't redraw objects that aren't on the map
             setChanged();
             notifyObservers();
@@ -204,7 +205,7 @@ public class GeoJsonFeature extends Observable implements Observer {
      *
      * @return GeoJsonGeometry
      */
-    public GeoJsonGeometry getGeometry() {
+    public Geometry getGeometry() {
         return mGeometry;
     }
 
@@ -213,7 +214,7 @@ public class GeoJsonFeature extends Observable implements Observer {
      *
      * @param geometry GeoJsonGeometry to set
      */
-    public void setGeometry(GeoJsonGeometry geometry) {
+    public void setGeometry(Geometry geometry) {
         mGeometry = geometry;
         setChanged();
         notifyObservers();
